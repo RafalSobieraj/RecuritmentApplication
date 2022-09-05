@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="text-align:center;">Spis artykułów</h1>
+    <form th:action="@{/search}" method="get" style="margin: 0 auto; display: block; max-width: 400px; text-align: center;">
+        <div>
+            <input class="form-control mr-sm-2" type="search" name="keyword" size="20" placeholder="Szukaj" required>
+            <input type="submit" value="Szukaj" style="margin: 10px auto;">
+        </div>
+    </form>
+    <form th:action="@{/searchID}" method="get" style="margin: 0 auto; display: block; max-width: 400px; text-align: center;">
+        <input class="form-control mr-sm-2" type="search" name="keywordID" size="20" placeholder="Szukaj po ID" required style="margin: 10px auto;">
+        <input type="submit" value="Szukaj">
+    </form>
+    <div style="text-align: center; margin: auto;">
+        <h3>
+            [[${message}]]
+          </h3>
+        <a th:href="@{article/new}" style="font-size: 30px;">Dodaj artykuł</a>
+    </div>
+    <div class="tableInTable" style="max-width: 1500px; margin: 50px auto;">
+        <table class="table table-bordered" style="text-align: center;">
+            <thead class="theadStyle">
+                <tr>
+                    <th>ID</th>
+                    <th>Autor</th>
+                    <th>Tytuł</th>
+                    <th>Czasopismo</th>
+                    <th style="width: 300px;">Akcje</th>
+                </tr>
+            </thead>
+            <tbody class="description">
+                <th:block th:each="article : ${articleList}">
+                    <tr>
+                        <td style="background-color: lightblue">[[${article.id}]]</td>
+                        <td>[[${article.author}]]</td>
+                        <td>
+                            <a style="font-size: 30px;" th:href="@{'/article/' + ${article.id}}">[[${article.title}]]</a>
+                        </td>
+                        <td>[[${article.magazineName}]]</td>
+                        <td>
+                            <a th:href="@{'/article/edit/' + ${article.id}}">Edytuj</a>
+                            <a th:href="@{'/article/delete/' + ${article.id}}">Usuń</a>
+                        </td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+  </div>
+</body>
+</html>

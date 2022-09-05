@@ -1,0 +1,22 @@
+.description td{
+    background-color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 30px;
+}
+
+.selectArticle{
+    text-align: center;
+}
+
+.articleHeader{
+    position: relative;
+}
+
+.articleForm{
+    font-size: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+
+}

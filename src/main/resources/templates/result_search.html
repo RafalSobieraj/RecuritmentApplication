@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.2/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Document</title>
+</head>
+<body>
+    <h1 th:text="*{searchResult}"></h1>
+    <div class="row">
+        <div class="tableInTable" style="max-width: 1500px; margin: 50px auto;">
+            <table class="table table-bordered" style="text-align: center;">
+                <thead class="theadStyle">
+                    <tr>
+                        <th>ID</th>
+                        <th>Autor</th>
+                        <th>Tytuł</th>
+                        <th>Czasopismo</th>
+                        <th style="width: 300px;">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody class="description">
+                    <th:block th:each="article : ${resultList}">
+                        <tr>
+                            <td style="background-color: lightblue">[[${article.id}]]</td>
+                            <td>[[${article.author}]]</td>
+                            <td>
+                                <a style="font-size: 30px;" th:href=@{/article/{id}(id=${article.id})}>[[${article.title}]]</a>
+                            </td>
+                            <td>[[${article.magazineName}]]</td>
+                            <td>
+                                <a class="h4 mr-3">Edytuj</a>
+                                <a class="h4">Usuń</a>
+                            </td>
+                        </tr>
+                    </th:block>
+                </tbody>
+            </table>
+      </div>
+    </div>
+</body>
+</html>
