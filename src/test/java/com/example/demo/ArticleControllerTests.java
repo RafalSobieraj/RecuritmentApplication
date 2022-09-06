@@ -1,6 +1,8 @@
 package com.example.demo;
 
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.model.article.Article;
 import com.example.demo.model.article.ArticleController;
 import com.example.demo.model.article.ArticleRepository;
+import com.example.demo.model.article.ArticleService;
 
 
 @RunWith(SpringRunner.class)
@@ -42,6 +45,9 @@ public class ArticleControllerTests {
     private ArticleRepository articleRepository;
 
     @Mock
+    private ArticleService articleService;
+
+    @Mock
     private Model model;
 
     @Mock
@@ -50,8 +56,8 @@ public class ArticleControllerTests {
 
     @BeforeEach
     public void setup() throws Exception{
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
     }
 
@@ -87,5 +93,24 @@ public class ArticleControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/article/delete/{id}", article.getId()))
         .andExpect(MockMvcResultMatchers.redirectedUrl("/"));
+    }
+
+    @Test
+    public void articleControllerNewArticleTest() throws Exception{
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/article/new"))
+        .andExpect(MockMvcResultMatchers.model().attribute("article", new Article()))
+        .andExpect(MockMvcResultMatchers.model().attribute("title", "Tworzenie nowego artykułu"))
+        .andExpect(MockMvcResultMatchers.view().name("article_form.html"));
+    }
+
+    @Test
+    public void articleControllerEditArticleTest() throws Exception{
+
+        Article article = articleService.get(81);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/article/edit/{id}", 81))
+        .andExpect(MockMvcResultMatchers.model().attribute("title", "Edycja artykułu o id " + 81))
+        .andExpect(MockMvcResultMatchers.view().name("article_form.html"));
     }
 }

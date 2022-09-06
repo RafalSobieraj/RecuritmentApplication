@@ -26,20 +26,21 @@ public class ArticleController {
 
     @GetMapping("/")
     public ModelAndView homePage(Model model){
-        return articlesView(model, "publishDate", "asc");
+        return viewPage(model, "publishDate", "asc");
     }
 
-    @GetMapping("")
-    public ModelAndView articlesView(Model model,
-    @Param("field") String field,
-    @Param("sortDirection") String sortDirection){
+    @GetMapping("/sort")
+    public ModelAndView viewPage(Model model,
+        @Param("field") String field,
+        @Param("sortDirection") String sortDirection) {
+     
         List<Article> articleList = articleService.articlesList(field, sortDirection);
+       
         model.addAttribute("articleList", articleList);
         model.addAttribute("field", field);
-        model.addAttribute("sortDirection", sortDirection);
-
-        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
-        model.addAttribute("reverseSort", reverseSortDirection);
+        model.addAttribute("sortDir", sortDirection);
+        model.addAttribute("reverseSort", sortDirection.equals("asc") ? "desc" : "asc");
+     
 
         modelAndView.setViewName("index.html");
         return modelAndView;

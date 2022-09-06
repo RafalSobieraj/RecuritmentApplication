@@ -25,7 +25,7 @@
         <h3>
             [[${message}]]
           </h3>
-        <a th:href="@{article/new}" style="font-size: 30px;">Dodaj artykuł</a>
+        <a th:href="@{/article/new}" style="font-size: 30px;">Dodaj artykuł</a>
     </div>
     <div class="tableInTable" style="max-width: 1500px; margin: 50px auto;">
         <table class="table table-bordered" style="text-align: center;">
@@ -36,7 +36,7 @@
                     <th>Tytuł</th>
                     <th>Czasopismo</th>
                     <th>
-                        <a th:href="@{'/' + '?field=publishDate&sortDirection=' + ${reverseSort}}">Data publikacji</a>
+                        <a th:href="@{'/sort/' + '?field=publishDate&sortDirection=' + ${reverseSort}}">Data publikacji</a>
                     </th>
                     <th style="width: 300px;">Akcje</th>
                 </tr>
