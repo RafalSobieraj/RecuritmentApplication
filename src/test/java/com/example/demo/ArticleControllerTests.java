@@ -1,7 +1,7 @@
 package com.example.demo;
 
 
-import java.util.Optional;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -107,10 +107,19 @@ public class ArticleControllerTests {
     @Test
     public void articleControllerEditArticleTest() throws Exception{
 
-        Article article = articleService.get(81);
-
         mockMvc.perform(MockMvcRequestBuilders.get("/article/edit/{id}", 81))
         .andExpect(MockMvcResultMatchers.model().attribute("title", "Edycja artykułu o id " + 81))
         .andExpect(MockMvcResultMatchers.view().name("article_form.html"));
+    }
+
+    @Test
+    public void articleControllerSearchTest() throws Exception{
+
+        String keyword = "Test";
+        List<Article> resultList = articleService.search(keyword);
+        
+        mockMvc.perform(MockMvcRequestBuilders.get("/search"))
+        .andExpect(MockMvcResultMatchers.model().attribute("resultList", resultList))
+        .andExpect(MockMvcResultMatchers.view().name("result_search.html"));
     }
 }
