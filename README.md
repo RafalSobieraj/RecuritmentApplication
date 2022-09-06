@@ -1,4 +1,4 @@
-# RecuritmentApplication
+# RecruitmentApplication
 
 Programista: Rafał Sobieraj
 
