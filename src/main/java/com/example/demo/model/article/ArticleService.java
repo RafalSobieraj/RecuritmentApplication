@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -13,8 +14,11 @@ public class ArticleService {
     
     @Autowired private ArticleRepository articleRepository;
 
-    public List<Article> articlesList(){
-        return (List<Article>) articleRepository.findAll();
+    public List<Article> articlesList(String field, String sortDirection){
+        Sort sort = Sort.by("publishDate");
+        sort = sortDirection.equals("asc") ? sort.ascending() : sort.descending();
+
+        return (List<Article>) articleRepository.findAll(sort);
     }
 
     public Article save(Article article){

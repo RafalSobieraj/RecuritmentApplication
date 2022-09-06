@@ -35,6 +35,9 @@
                     <th>Autor</th>
                     <th>Tytuł</th>
                     <th>Czasopismo</th>
+                    <th>
+                        <a th:href="@{'/' + '?field=publishDate&sortDirection=' + ${reverseSort}}">Data publikacji</a>
+                    </th>
                     <th style="width: 300px;">Akcje</th>
                 </tr>
             </thead>
@@ -47,6 +50,7 @@
                             <a style="font-size: 30px;" th:href="@{'/article/' + ${article.id}}">[[${article.title}]]</a>
                         </td>
                         <td>[[${article.magazineName}]]</td>
+                        <td>[[${article.publishDate}]]</td>
                         <td>
                             <a th:href="@{'/article/edit/' + ${article.id}}">Edytuj</a>
                             <a th:href="@{'/article/delete/' + ${article.id}}">Usuń</a>

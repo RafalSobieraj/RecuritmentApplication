@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,10 +24,22 @@ public class ArticleController {
     @Autowired private ArticleService articleService;
     ModelAndView modelAndView = new ModelAndView();
 
-    @GetMapping("")
+    @GetMapping("/")
     public ModelAndView homePage(Model model){
-        List<Article> articleList = articleService.articlesList();
+        return articlesView(model, "publishDate", "asc");
+    }
+
+    @GetMapping("")
+    public ModelAndView articlesView(Model model,
+    @Param("field") String field,
+    @Param("sortDirection") String sortDirection){
+        List<Article> articleList = articleService.articlesList(field, sortDirection);
         model.addAttribute("articleList", articleList);
+        model.addAttribute("field", field);
+        model.addAttribute("sortDirection", sortDirection);
+
+        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
+        model.addAttribute("reverseSort", reverseSortDirection);
 
         modelAndView.setViewName("index.html");
         return modelAndView;
@@ -68,7 +79,7 @@ public class ArticleController {
             return modelAndView;
         } catch(NotFoundException a){
             re.addFlashAttribute("message", a.getMessage());
-            modelAndView.setViewName("index.html");
+            modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
 
@@ -83,7 +94,7 @@ public class ArticleController {
         } catch (NotFoundException e) {
             re.addFlashAttribute("message", "Wystąpił błąd przy usuwaniu.");
         }
-        modelAndView.setViewName("index.html");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 
@@ -106,7 +117,7 @@ public class ArticleController {
         articleService.save(article);
         re.addFlashAttribute("message", "Pomyślnie dodano artykuł");
 
-        modelAndView.setViewName("index.html");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
 
     }
@@ -123,7 +134,7 @@ public class ArticleController {
         } catch (NotFoundException e) {
             re.addFlashAttribute("message", "Wystąpił błąd");
 
-            modelAndView.setViewName("index.html");
+            modelAndView.setViewName("redirect:/");
             return modelAndView;
         }
 
