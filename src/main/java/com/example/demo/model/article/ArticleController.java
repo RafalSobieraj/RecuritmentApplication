@@ -75,6 +75,7 @@ public class ArticleController {
             model.addAttribute("articleContent", article.getContent());
             model.addAttribute("articleAuthor", article.getAuthor());
             model.addAttribute("articleTitle", article.getTitle());
+            model.addAttribute("articlePublishDate", article.getPublishDate());
 
             modelAndView.setViewName("article_select.html");
             return modelAndView;
